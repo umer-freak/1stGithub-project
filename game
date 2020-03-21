@@ -1,0 +1,146 @@
+package game;
+
+import java.util.Scanner;
+
+public class Game{
+	static Scanner input=new Scanner(System.in);	
+	 char[][] grid=new char[6][8];
+	 String player1="red";
+	 String player2="yellow";
+	 static boolean win=false;
+	 
+	 
+	 public void gridvalues() {
+	for (int i=0;i<6;i++) {
+		for(int j=0;j<8;j++) { 
+			this.grid[i][j]=' ';
+		}
+	}
+ }
+	 
+	 
+	public void gridcreator(char[][] arr) {
+		for(int i=0;i<6;i++) {
+			for (int j=0;j<8;j++) {
+				System.out.print("|"+arr[i][j]);
+			}
+			System.out.print("\n");
+		}
+	}
+	
+	
+	public void check(int x,String player) {
+		for(int i=0;i<6;i++) {
+		if (grid[i][x]==' ') {
+			if(player=="red")
+			grid[i][x]='R';
+			else if(player=="yellow")
+		   grid[i][x]='Y';
+		}
+		}
+		
+	}
+	
+	public boolean horizontal(char[][] grid) {
+		boolean win=false;
+		for (int i=0;i<6;i++) {
+			for (int j=0;j<8;j++) {
+			if(grid[i][j]=='R' || grid[i][j]=='Y') {
+		if(grid[i][j]==grid[i][j+1] && grid[i][j]==grid[i][j+2] && grid[i][j]==grid[i][j+3] && grid[i][j]==grid[i][j+4]) {
+					win=true;
+					break;	
+			}
+		else if(grid[i][j]==grid[i][j-1] && grid[i][j]==grid[i][j-2] && grid[i][j]==grid[i][j-3] && grid[i][j]==grid[i][j-4]) {
+			win=true;
+			break;	
+	}
+		}
+			}
+			if(win==true)
+	         break;
+		}
+		return win;
+		
+	}
+	
+	public boolean vertical(char[][] grid) {
+		boolean win=false;
+		for (int i=0;i<6;i++) {
+			for (int j=0;j<8;j++) {
+				if(grid[i][j]=='R' || grid[i][j]=='Y') {
+			if(grid[i][j]==grid[i+1][j] && grid[i][j]==grid[i+2][j] && grid[i][j]==grid[i+3][j] && grid[i][j]==grid[i+4][j]) {
+				win=true;
+				break;
+			}
+			else if(grid[i][j]==grid[i-1][j] && grid[i][j]==grid[i-2][j] && grid[i][j]==grid[i-3][j] && grid[i][j]==grid[i-4][j-4]) {
+				win=true;
+				break;
+			}
+			}
+			}
+			if (win==true)
+				break;
+		}
+		return win;
+	}
+	
+	
+	public boolean diagonal(char[][] grid) {
+		boolean win=false;
+		for (int i=0;i<6;i++) {
+			for (int j=0;j<8;j++) {
+				if(grid[i][j]=='R' || grid[i][j]=='Y') {
+		if(grid[i][j]==grid[i+1][j+1] && grid[i][j]==grid[i+2][j+2] && grid[i][j]==grid[i+3][j+3] && grid[i][j]==grid[i+4][j+4]) {
+					win=true;
+					break;
+				}
+		else if(grid[i][j]==grid[i-1][j-1] && grid[i][j]==grid[i-2][j-2] && grid[i][j]==grid[i-3][j-3] && grid[i][j]==grid[i-4][j+4]) {
+			win=true;
+			break;
+		}
+		}
+				
+			}
+			if (win==true)
+				break;
+		}
+		return win;
+	}
+	 
+	public boolean checkwin(char[][] grid) {
+		boolean win=false;
+
+		if((win=horizontal(grid))==true)
+			return win;
+		if((win=vertical(grid))==true)
+			return win;
+		if((win=diagonal(grid))==true)
+		    return win;
+		else return false;
+		}
+		
+	
+		public static void main(String[] args) {
+			Game game1=new Game();
+			game1.gridvalues();
+			int column;
+			int turn=1;
+			String player;
+			while(win!=true) {
+			game1.gridcreator(game1.grid);
+			if(turn%2==0)
+			player=game1.player1;
+			else
+			player=game1.player2;
+			System.out.println(player + " turn");
+			System.out.println("Enter the column you want to enter your respective symbol");
+			column=input.nextInt();
+			game1.check(column, player);
+			win=game1.checkwin(game1.grid);
+			turn++;	
+			system("cls")
+			}
+			
+		}
+		
+	}
